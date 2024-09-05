@@ -7,7 +7,7 @@ Dưới đây là danh sách các repo chứa bài tập theo từng tuần:
 - [Bài Tập 01 - 22/08/2024](https://github.com/nguyenkhanhquy/baitap01-22-08-2024)
 - [Bài Tập 02 - 29/08/2024](https://github.com/nguyenkhanhquy/baitap02-29-08-2024)
 
-## Author
+## Sinh viên thực hiện
 
-- Author Name: `Nguyễn Khánh Quy`
-- Email: <nguyenkhanhquy123@gmail.com>
+- Họ và tên: `Nguyễn Khánh Quy`
+- MSSV: `21110282`
