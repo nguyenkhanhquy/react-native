@@ -32,6 +32,7 @@ const ForgotPassword = ({ navigation }) => {
                 setOtpSent(true);
             } else {
                 showToast("error", "Error", data.message);
+                console.log(data.message);
             }
         } catch (error) {
             showToast("error", "Error", "An error occurred. Please try again.");
@@ -81,7 +82,7 @@ const ForgotPassword = ({ navigation }) => {
             )}
 
             {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" style={{ marginBottom: 15 }} />
+                <ActivityIndicator size="large" color="#6dcf5b" style={{ marginBottom: 15 }} />
             ) : (
                 <>
                     {otpSent ? (

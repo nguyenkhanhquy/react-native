@@ -24,7 +24,7 @@ const CommonStyles = StyleSheet.create({
     button: {
         width: "50%",
         height: 40,
-        backgroundColor: "#007bff",
+        backgroundColor: "#6dcf5b",
         borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",

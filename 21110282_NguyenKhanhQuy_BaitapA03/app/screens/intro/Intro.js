@@ -1,13 +1,28 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import { getToken } from "../../utils/AuthStorage";
+import { introspect } from "../../services/AuthAPIService";
 
 // Import hình ảnh từ thư mục cục bộ
 import profileImage from "../../assets/img/cat.jpg";
 
 const Intro = ({ navigation }) => {
     useEffect(() => {
-        const timer = setTimeout(() => {
+        const checkToken = async () => {
+            const token = await getToken();
+            if (token) {
+                const data = await introspect(token);
+
+                if (data.success) {
+                    navigation.replace("MainTabNavigator", { message: data.message });
+                    return;
+                }
+            }
             navigation.replace("Login");
+        };
+
+        const timer = setTimeout(() => {
+            checkToken();
         }, 2000);
 
         return () => clearTimeout(timer);

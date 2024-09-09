@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from "react-native";
 import { login } from "../../services/AuthAPIService";
 import CommonStyles from "../../assets/styles/CommonStyles";
+import { handleLoginResponse, getToken } from "../../utils/AuthStorage";
 
 const Login = ({ navigation }) => {
     const [email, setEmail] = useState("");
@@ -14,7 +15,9 @@ const Login = ({ navigation }) => {
             if (data.success) {
                 setEmail("");
                 setPassword("");
-                navigation.navigate("Home", { message: data.message });
+                handleLoginResponse(data);
+                getToken();
+                navigation.navigate("MainTabNavigator", { message: data.message });
             } else {
                 Alert.alert("Login failed", data.message);
             }
@@ -66,7 +69,7 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     forgotPasswordText: {
-        color: "#007bff",
+        color: "#6dcf5b",
         marginBottom: 15,
     },
 });
