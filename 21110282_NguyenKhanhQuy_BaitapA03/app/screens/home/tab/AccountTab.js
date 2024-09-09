@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 import { logout } from "../../../services/AuthAPIService";
 import { myInfo } from "../../../services/UsersAPIService";
@@ -53,67 +54,61 @@ export default function AccountTab({ route, navigation }) {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Tài khoản</Text>
+        <View className="flex-1 bg-gray-100">
+            {/* Background Section */}
+            <View className="bg-green-600 h-36 w-full absolute top-0 left-0 right-0 z-[-1]" />
 
+            {/* Profile Section */}
             {userInfo && (
                 <>
-                    <Image source={profileImage} style={styles.image} />
-                    <Text style={styles.info}>Xin chào, {userInfo.fullName}</Text>
-                    <Text style={styles.info}>Email: {userInfo.email}!</Text>
-                    {userInfo.active ? (
-                        <Text style={styles.info}>Tài khoản đã xác thực</Text>
-                    ) : (
-                        <Text style={styles.info}>Tài khoản chưa xác thực</Text>
-                    )}
-                    <Text style={styles.info}>Thời gian đăng ký: {userInfo.registrationDate}</Text>
+                    <View className="flex-row bg-white rounded-lg p-5 mx-5 mt-20">
+                        <View className="relative">
+                            <Image
+                                source={profileImage}
+                                className="w-24 h-24 rounded-full border-2 border-green-500 mr-5"
+                            />
+                            <TouchableOpacity
+                                className="absolute right-0 bottom-0 bg-gray-600 rounded-full p-1 border-2 border-white"
+                                // onPress={selectImage}
+                            >
+                                <Ionicons name="camera-outline" size={20} color="#fff" />
+                            </TouchableOpacity>
+                        </View>
+                        <View className="flex-1">
+                            <Text className="text-lg font-bold text-gray-800 mb-1">{userInfo.fullName}</Text>
+                            <Text className="text-sm text-gray-600">{userInfo.email}</Text>
+                            {userInfo.active ? (
+                                <Text className="text-sm font-bold text-gray-600 mt-2 ml-3">Tài khoản đã xác thực</Text>
+                            ) : (
+                                <Text className="text-sm font-bold text-gray-600 mt-2 ml-3">
+                                    Tài khoản chưa xác thực
+                                </Text>
+                            )}
+                        </View>
+                    </View>
                 </>
             )}
 
-            <TouchableOpacity style={styles.button} onPress={handleLogout}>
-                <Text style={styles.buttonText}>Đăng xuất</Text>
-            </TouchableOpacity>
+            {/* Options Section */}
+            <View className="px-5 mt-10">
+                <TouchableOpacity
+                    className="bg-white p-4 rounded-lg mb-4"
+                    // onPress={() => navigation.navigate("PersonalInfo")}
+                >
+                    <Text className="text-lg font-medium text-gray-800">Thông tin cá nhân</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    className="bg-white p-4 rounded-lg mb-4"
+                    // onPress={() => navigation.navigate("ChangePassword")}
+                >
+                    <Text className="text-lg font-medium text-gray-800">Đổi mật khẩu</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity className="bg-white p-4 rounded-lg" onPress={handleLogout}>
+                    <Text className="text-lg font-medium text-red-600">Đăng xuất</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#eafaf1",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingHorizontal: 20,
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: "bold",
-        color: "#6dcf5b",
-        marginBottom: 30,
-        textAlign: "center",
-    },
-    info: {
-        textAlign: "center",
-        fontSize: 18,
-        color: "#333",
-        marginBottom: 10,
-    },
-    button: {
-        backgroundColor: "#6dcf5b",
-        borderRadius: 5,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        alignItems: "center",
-    },
-    buttonText: {
-        color: "#ffffff",
-        fontSize: 18,
-        fontWeight: "bold",
-    },
-    image: {
-        width: 120,
-        height: 120,
-        borderRadius: 10,
-        marginBottom: 20,
-    },
-});
