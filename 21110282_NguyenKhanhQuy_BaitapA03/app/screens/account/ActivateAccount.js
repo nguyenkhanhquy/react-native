@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
-import { sendOtp, validateOtp } from "../../services/AuthAPIService";
+import { sendOtp, activate } from "../../services/AuthAPIService";
 import CommonStyles from "../../assets/styles/CommonStyles";
 import Toast from "react-native-toast-message";
 
-const ForgotPassword = ({ navigation }) => {
+import { getToken } from "../../utils/AuthStorage";
+
+const ActivateAccount = ({ route, navigation }) => {
     const [loading, setLoading] = useState(false);
-    const [email, setEmail] = useState("");
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState("");
+
+    const { email } = route.params;
 
     const showToast = (type, text1, text2) => {
         Toast.show({
@@ -22,7 +25,7 @@ const ForgotPassword = ({ navigation }) => {
         });
     };
 
-    const handleResetPassword = async () => {
+    const handleSendOTP = async () => {
         setLoading(true);
         try {
             const data = await sendOtp(email);
@@ -44,13 +47,17 @@ const ForgotPassword = ({ navigation }) => {
     const handleConfirmOTP = async () => {
         setLoading(true);
         try {
-            const data = await validateOtp(email, otp);
+            const token = await getToken();
+            console.log(token);
+            if (token) {
+                const data = await activate(token, otp);
 
-            if (data.success) {
-                showToast("success", "Success", data.message);
-                navigation.navigate("ResetPassword", { email: email });
-            } else {
-                showToast("error", "Error", data.message);
+                if (data.success) {
+                    showToast("success", "Success", data.message);
+                    navigation.goBack();
+                } else {
+                    showToast("error", "Error", data.message);
+                }
             }
         } catch (error) {
             showToast("error", "Error", "An error occurred. Please try again.");
@@ -61,15 +68,9 @@ const ForgotPassword = ({ navigation }) => {
 
     return (
         <View style={CommonStyles.container}>
-            <Text style={CommonStyles.title}>Forgot Password Page</Text>
+            <Text style={CommonStyles.title}>Activate Account Page</Text>
 
-            <TextInput
-                style={CommonStyles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={setEmail}
-                editable={!otpSent}
-            />
+            <TextInput style={CommonStyles.input} placeholder="Email" value={email} editable={false} />
 
             {otpSent && (
                 <TextInput
@@ -78,6 +79,7 @@ const ForgotPassword = ({ navigation }) => {
                     value={otp}
                     onChangeText={setOtp}
                     keyboardType="numeric"
+                    maxLength={6}
                 />
             )}
 
@@ -90,18 +92,18 @@ const ForgotPassword = ({ navigation }) => {
                             <Text style={CommonStyles.buttonText}>Confirm</Text>
                         </TouchableOpacity>
                     ) : (
-                        <TouchableOpacity style={CommonStyles.button} onPress={handleResetPassword}>
-                            <Text style={CommonStyles.buttonText}>Reset Password</Text>
+                        <TouchableOpacity style={CommonStyles.button} onPress={handleSendOTP}>
+                            <Text style={CommonStyles.buttonText}>Send OTP</Text>
                         </TouchableOpacity>
                     )}
                 </>
             )}
 
-            <TouchableOpacity style={CommonStyles.button} onPress={() => navigation.navigate("Login")}>
+            <TouchableOpacity style={CommonStyles.button} onPress={() => navigation.goBack()}>
                 <Text style={CommonStyles.buttonText}>Back</Text>
             </TouchableOpacity>
         </View>
     );
 };
 
-export default ForgotPassword;
+export default ActivateAccount;

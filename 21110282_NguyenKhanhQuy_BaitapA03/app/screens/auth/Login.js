@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
                 setPassword("");
                 handleLoginResponse(data);
                 getToken();
-                navigation.navigate("MainTabNavigator", { message: data.message });
+                navigation.navigate("MainTabNavigator");
             } else {
                 Alert.alert("Login failed", data.message);
             }

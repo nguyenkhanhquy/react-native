@@ -26,9 +26,9 @@ export const register = async (email, fullName, password) => {
     return postRequest("auth/register", data);
 };
 
-export const forgotPassword = async (email) => {
+export const sendOtp = async (email) => {
     const data = { email };
-    return postRequest("auth/forgot-password", data);
+    return postRequest("auth/send-otp", data);
 };
 
 export const validateOtp = async (email, otp) => {
@@ -39,6 +39,11 @@ export const validateOtp = async (email, otp) => {
 export const resetPassword = async (email, newPassword) => {
     const data = { email, newPassword };
     return postRequest("auth/reset-password", data);
+};
+
+export const activate = async (token, otp) => {
+    const data = { token, otp };
+    return postRequest("auth/activate", data);
 };
 
 export const introspect = async (token) => {

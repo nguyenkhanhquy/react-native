@@ -14,7 +14,7 @@ const Intro = ({ navigation }) => {
                 const data = await introspect(token);
 
                 if (data.success) {
-                    navigation.replace("MainTabNavigator", { message: data.message });
+                    navigation.replace("MainTabNavigator");
                     return;
                 }
             }

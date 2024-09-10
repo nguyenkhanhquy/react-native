@@ -10,6 +10,8 @@ import Login from "./app/screens/auth/Login";
 import Register from "./app/screens/auth/Register";
 import ForgotPassword from "./app/screens/auth/ForgotPassword";
 import ResetPassword from "./app/screens/auth/ResetPassword";
+import ChangePassword from "./app/screens/account/ChangePassword";
+import ActivateAccount from "./app/screens/account/ActivateAccount";
 
 import AccountTab from "./app/screens/home/tab/AccountTab";
 import HomeTab from "./app/screens/home/tab/HomeTab";
@@ -71,6 +73,12 @@ export default function App() {
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                 <Stack.Screen name="ResetPassword" component={ResetPassword} />
                 <Stack.Screen name="MainTabNavigator" component={MainTabNavigator} />
+                <Stack.Screen
+                    name="ChangePassword"
+                    component={ChangePassword}
+                    options={{ headerShown: true, headerTitle: "Đổi mật khẩu", headerTitleAlign: "center" }}
+                />
+                <Stack.Screen name="ActivateAccount" component={ActivateAccount} />
             </Stack.Navigator>
             <Toast />
         </NavigationContainer>
