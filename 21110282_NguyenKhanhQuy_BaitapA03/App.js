@@ -10,6 +10,7 @@ import Login from "./app/screens/auth/Login";
 import Register from "./app/screens/auth/Register";
 import ForgotPassword from "./app/screens/auth/ForgotPassword";
 import ResetPassword from "./app/screens/auth/ResetPassword";
+import PersonalInfo from "./app/screens/account/PersonalInfo";
 import ChangePassword from "./app/screens/account/ChangePassword";
 import ActivateAccount from "./app/screens/account/ActivateAccount";
 
@@ -73,6 +74,11 @@ export default function App() {
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                 <Stack.Screen name="ResetPassword" component={ResetPassword} />
                 <Stack.Screen name="MainTabNavigator" component={MainTabNavigator} />
+                <Stack.Screen
+                    name="PersonalInfo"
+                    component={PersonalInfo}
+                    options={{ headerShown: true, headerTitle: "Thông tin tài khoản", headerTitleAlign: "center" }}
+                />
                 <Stack.Screen
                     name="ChangePassword"
                     component={ChangePassword}

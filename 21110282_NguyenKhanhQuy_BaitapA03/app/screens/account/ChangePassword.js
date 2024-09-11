@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, Image } from "react-native";
 
-export default function ChangePasswordScreen({ navigation, route }) {
+export default function ChangePasswordScreen({ route, navigation }) {
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -77,7 +77,8 @@ export default function ChangePasswordScreen({ navigation, route }) {
                 <View className="flex-row items-center w-full h-10 rounded-md mb-2 px-4 bg-[#f1f1f1] border border-[#e2e0e0]">
                     <TextInput
                         className="flex-1 h-full text-base"
-                        placeholder="abc@gmail.com"
+                        placeholder="Email"
+                        value={route.params.user.email}
                         placeholderTextColor="#a0a0a0"
                         editable={false}
                     />

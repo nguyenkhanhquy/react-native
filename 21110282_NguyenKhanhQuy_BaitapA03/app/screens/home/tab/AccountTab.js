@@ -102,7 +102,7 @@ export default function AccountTab({ route, navigation }) {
                 <TouchableOpacity
                     className="bg-white p-3 rounded-lg mb-4"
                     style={styles.shadowStyle}
-                    // onPress={() => navigation.navigate("PersonalInfo")}
+                    onPress={() => navigation.navigate("PersonalInfo", { user: userInfo })}
                 >
                     <Text className="text-lg font-medium text-gray-800">Thông tin cá nhân</Text>
                 </TouchableOpacity>
@@ -110,7 +110,7 @@ export default function AccountTab({ route, navigation }) {
                 <TouchableOpacity
                     className="bg-white p-3 rounded-lg mb-4"
                     style={styles.shadowStyle}
-                    onPress={() => navigation.navigate("ChangePassword")}
+                    onPress={() => navigation.navigate("ChangePassword", { user: userInfo })}
                 >
                     <Text className="text-lg font-medium text-gray-800">Đổi mật khẩu</Text>
                 </TouchableOpacity>
