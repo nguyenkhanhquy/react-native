@@ -77,7 +77,7 @@ export default function App() {
                 <Stack.Screen
                     name="PersonalInfo"
                     component={PersonalInfo}
-                    options={{ headerShown: true, headerTitle: "Thông tin tài khoản", headerTitleAlign: "center" }}
+                    options={{ headerShown: true, headerTitle: "Thông tin cá nhân", headerTitleAlign: "center" }}
                 />
                 <Stack.Screen
                     name="ChangePassword"

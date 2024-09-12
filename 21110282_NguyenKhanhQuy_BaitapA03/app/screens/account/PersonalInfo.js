@@ -5,6 +5,8 @@ export default function PersonalInfo({ route, navigation }) {
     const [fullName, setFullName] = useState(route.params.user.fullName);
     const [fullNameError, setFullNameError] = useState("");
 
+    const [address, setAddress] = useState(route.params.user.address);
+
     const validateFullName = (value) => {
         if (value.trim() === "") {
             setFullNameError("Họ và tên không được để trống");
@@ -59,6 +61,17 @@ export default function PersonalInfo({ route, navigation }) {
                     />
                 </View>
                 {fullNameError ? <Text className="text-red-500 text-sm mb-4">{fullNameError}</Text> : null}
+
+                <Text className="text-base font-bold mb-2">Địa chỉ</Text>
+                <View className="bg-white rounded-lg px-4 py-3 mb-4">
+                    <TextInput
+                        className="text-base text-gray-700"
+                        placeholder="Nhập địa chỉ"
+                        placeholderTextColor="#a0a0a0"
+                        value={address}
+                        onChangeText={setAddress}
+                    />
+                </View>
             </View>
 
             {/* Button Section */}
