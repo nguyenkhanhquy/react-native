@@ -1,8 +1,16 @@
 # Lập Trình Di Động Nâng Cao - React Native
 
+## Sinh viên thực hiện
+
+-   Họ và tên: `Nguyễn Khánh Quy`
+-   MSSV: `21110282`
+
 ## Danh sách bài tập
 
-Dưới đây là danh sách các repo chứa bài tập theo từng tuần:
+1. [Bài tập tuần 1 - 22/08/2024](#bài-tập-tuần-1---22082024)
+1. [Bài tập tuần 2 - 29/08/2024](#bài-tập-tuần-2---29082024)
+1. [Bài tập tuần 3 - 05/09/2024](#bài-tập-tuần-3---05092024)
+1. [Bài tập tuần 4 - 12/09/2024](#bài-tập-tuần-4---12092024)
 
 ### Bài tập tuần 1 - 22/08/2024
 
@@ -42,8 +50,3 @@ Yêu cầu:
 1. Chức năng Profile của người dùng đã đăng nhập thành công (API và Code): nộp từ 8g - 10g30
 1. Chức năng tìm kiếm, lọc sản phẩm trên trang chủ (API và Code): về nhà
 1. Chức năng xem Chi tiết sản phẩm từ trang chủ, từ kết quả tìm kiếm, lọc (API và Code): về nhà
-
-## Sinh viên thực hiện
-
--   Họ và tên: `Nguyễn Khánh Quy`
--   MSSV: `21110282`
