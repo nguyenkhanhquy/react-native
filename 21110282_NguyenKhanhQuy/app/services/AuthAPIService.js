@@ -36,8 +36,8 @@ export const validateOtp = async (email, otp) => {
     return postRequest("auth/validate-otp", data);
 };
 
-export const resetPassword = async (email, newPassword) => {
-    const data = { email, newPassword };
+export const resetPassword = async (email, newPassword, otp) => {
+    const data = { email, newPassword, otp };
     return postRequest("auth/reset-password", data);
 };
 

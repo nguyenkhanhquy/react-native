@@ -71,8 +71,16 @@ export default function App() {
                 <Stack.Screen name="Intro" component={Intro} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Register" component={Register} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-                <Stack.Screen name="ResetPassword" component={ResetPassword} />
+                <Stack.Screen
+                    name="ForgotPassword"
+                    component={ForgotPassword}
+                    options={{ headerShown: true, headerTitle: "" }}
+                />
+                <Stack.Screen
+                    name="ResetPassword"
+                    component={ResetPassword}
+                    options={{ headerShown: true, headerTitle: "" }}
+                />
                 <Stack.Screen name="MainTabNavigator" component={MainTabNavigator} />
                 <Stack.Screen
                     name="PersonalInfo"
