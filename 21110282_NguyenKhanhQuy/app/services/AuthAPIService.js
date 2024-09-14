@@ -50,6 +50,15 @@ export const activate = async (token, otp) => {
     });
 };
 
+export const updatePassword = async (token, password, newPassword) => {
+    const data = { password, newPassword };
+    return postRequest("auth/update-password", data, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};
+
 export const introspect = async (token) => {
     const data = { token };
     return postRequest("auth/introspect", data);

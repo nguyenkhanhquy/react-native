@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, Image } from "react-native";
 
+import { updatePassword } from "../../services/AuthAPIService";
+
+import { getToken } from "../../utils/AuthStorage";
+
 export default function ChangePasswordScreen({ route, navigation }) {
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -63,6 +67,23 @@ export default function ChangePasswordScreen({ route, navigation }) {
             } catch (error) {
                 Alert.alert("Lỗi", "Đã xảy ra lỗi. Hãy thử lại.");
             }
+        }
+    };
+
+    const handleSave = async () => {
+        try {
+            const token = await getToken();
+            if (token) {
+                const data = await updatePassword(token, password, newPassword);
+                if (data.success) {
+                    Alert.alert("Thành công", "Đổi mật khẩu thành công");
+                    navigation.goBack();
+                } else {
+                    Alert.alert("Lỗi", data.message);
+                }
+            }
+        } catch (error) {
+            Alert.alert("Lỗi", "Đã xảy ra lỗi. Hãy thử lại");
         }
     };
 
@@ -133,7 +154,7 @@ export default function ChangePasswordScreen({ route, navigation }) {
                 >
                     <Text className="text-[#509b43] text-center font-bold text-base">Hủy</Text>
                 </TouchableOpacity>
-                <TouchableOpacity className="bg-[#509b43] rounded-full py-3 px-4 w-[49%]" onPress={handleResetPassword}>
+                <TouchableOpacity className="bg-[#509b43] rounded-full py-3 px-4 w-[49%]" onPress={handleSave}>
                     <Text className="text-white text-center font-bold text-base">Lưu</Text>
                 </TouchableOpacity>
             </View>
