@@ -63,6 +63,14 @@ const Login = ({ navigation }) => {
             >
                 <Text style={CommonStyles.buttonText}>Register</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate("MainTabNavigator");
+                }}
+            >
+                <Text className="text-sm font-bold text-gray-600 mt-2 ml-3">Trải nghiệm không cần đăng nhập</Text>
+            </TouchableOpacity>
         </View>
     );
 };
