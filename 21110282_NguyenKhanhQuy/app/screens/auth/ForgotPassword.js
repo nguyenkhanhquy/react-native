@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Alert, ActivityIndicator, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import Toast from "react-native-toast-message";
 
 import { sendOtp } from "../../services/AuthAPIService";
 
-const ForgotPassword = ({ navigation }) => {
+export default function ForgotPassword({ navigation }) {
     const [loading, setLoading] = useState(false);
-
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
-
     const [otpSent, setOtpSent] = useState(false);
 
     const showToast = (type, text1, text2) => {
@@ -17,7 +16,8 @@ const ForgotPassword = ({ navigation }) => {
             type: type,
             text1: text1,
             text2: text2,
-            position: "top",
+            position: "bottom",
+            bottomOffset: 80,
             visibilityTime: 3000,
             text1Style: { fontSize: 16, fontWeight: "bold" },
             text2Style: { fontSize: 12 },
@@ -60,16 +60,56 @@ const ForgotPassword = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View className="flex-1 bg-white px-5 justify-between">
+            <StatusBar style="auto" />
+
+            {loading && (
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.1)", // Làm mờ phần nền xung quanh một chút
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 10,
+                    }}
+                >
+                    {/* Hình vuông chứa ActivityIndicator */}
+                    <View
+                        style={{
+                            width: 68, // Kích thước của hình vuông
+                            height: 68,
+                            backgroundColor: "#fff", // Màu nền trắng cho hình vuông
+                            borderRadius: 10, // Bo góc cho hình vuông
+                            justifyContent: "center",
+                            alignItems: "center",
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.8,
+                            shadowRadius: 2,
+                            elevation: 5, // Hiệu ứng đổ bóng cho Android
+                        }}
+                    >
+                        <ActivityIndicator size="large" color="#6dcf5b" />
+                    </View>
+                </View>
+            )}
+
             <View>
-                <Text style={styles.title}>Quên mật khẩu</Text>
-                <Text style={styles.description}>
+                <Text className="text-2xl font-bold text-gray-800 mt-10 mb-8">Quên mật khẩu</Text>
+                <Text className="text-base text-gray-800 mb-5">
                     Vui lòng nhập email đăng ký của bạn. Chúng tôi sẽ gửi hướng dẫn đổi mật khẩu tới email này.
                 </Text>
-                <View style={[styles.inputContainer, emailError ? styles.inputError : null]}>
-                    {/* <Image source={icmail} style={[styles.icon, styles.iconFaded]} /> */}
+                <View
+                    className={`flex-row items-center w-full h-12 rounded-lg mb-2 px-4 ${
+                        emailError ? "border border-red-500" : "bg-gray-100"
+                    }`}
+                >
                     <TextInput
-                        style={styles.input}
+                        className="flex-1 h-full text-base text-gray-700"
                         placeholder="Nhập email"
                         placeholderTextColor="#a0a0a0"
                         value={email}
@@ -80,92 +120,17 @@ const ForgotPassword = ({ navigation }) => {
                         editable={!otpSent}
                     />
                 </View>
-                {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}
+                {emailError ? <Text className="text-red-500 text-sm mb-4">{emailError}</Text> : null}
             </View>
 
-            {loading ? (
-                <ActivityIndicator size="large" color="#0000ff" />
-            ) : (
-                <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-                    <Text style={styles.buttonText}>Tạo lại mật khẩu</Text>
+            <View>
+                <TouchableOpacity
+                    className="bg-[#509b43] w-full rounded-lg py-3 px-5 mb-4"
+                    onPress={handleResetPassword}
+                >
+                    <Text className="text-white text-center text-lg">Tạo lại mật khẩu</Text>
                 </TouchableOpacity>
-            )}
+            </View>
         </View>
     );
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#ffffff",
-        alignItems: "flex-start",
-        paddingHorizontal: 20,
-        justifyContent: "space-between",
-    },
-    title: {
-        fontSize: 24,
-        color: "#333",
-        marginTop: 40,
-        marginBottom: 30,
-        fontWeight: "bold",
-    },
-    description: {
-        fontSize: 16,
-        color: "#333",
-        marginBottom: 20,
-    },
-    inputContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        width: "100%",
-        height: 50,
-        borderRadius: 5,
-        marginBottom: 8,
-        paddingHorizontal: 15,
-        backgroundColor: "#f9f9f9",
-    },
-    inputError: {
-        borderColor: "red",
-        borderWidth: 1,
-    },
-    icon: {
-        width: 24,
-        height: 24,
-        marginRight: 10,
-    },
-    iconFaded: {
-        tintColor: "#a0a0a0",
-    },
-    input: {
-        flex: 1,
-        height: "100%",
-        fontSize: 16,
-    },
-    errorText: {
-        color: "red",
-        marginBottom: 16,
-        fontSize: 14,
-    },
-    button: {
-        backgroundColor: "#509b43",
-        width: "100%",
-        borderRadius: 5,
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        marginBottom: 20,
-        alignItems: "center",
-    },
-    buttonText: {
-        color: "#ffffff",
-        fontSize: 18,
-    },
-    bold: {
-        fontWeight: "bold",
-    },
-    noteText: {
-        color: "#a0a0a0",
-        textAlign: "center",
-    },
-});
-
-export default ForgotPassword;
+}
