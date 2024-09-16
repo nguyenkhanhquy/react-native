@@ -13,6 +13,7 @@ import ResetPassword from "./app/screens/auth/ResetPassword";
 import PersonalInfo from "./app/screens/account/PersonalInfo";
 import ChangePassword from "./app/screens/account/ChangePassword";
 import ActivateAccount from "./app/screens/account/ActivateAccount";
+import JobDetail from "./app/screens/job/JobDetail";
 
 import AccountTab from "./app/screens/home/tab/AccountTab";
 import HomeTab from "./app/screens/home/tab/HomeTab";
@@ -93,6 +94,7 @@ export default function App() {
                     options={{ headerShown: true, headerTitle: "Đổi mật khẩu", headerTitleAlign: "center" }}
                 />
                 <Stack.Screen name="ActivateAccount" component={ActivateAccount} />
+                <Stack.Screen name="JobDetail" component={JobDetail} />
             </Stack.Navigator>
             <Toast />
         </NavigationContainer>
