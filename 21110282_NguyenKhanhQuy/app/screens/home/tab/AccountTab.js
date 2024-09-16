@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -13,10 +13,12 @@ import profileImage from "../../../assets/img/cat.jpg";
 import avatarDefault from "../../../assets/img/avatar-default.png";
 
 export default function AccountTab({ route, navigation }) {
+    const [loading, setLoading] = useState(true);
     const [userInfo, setUserInfo] = useState(null);
 
-    const fetchUserInfo = async () => {
+    const fetchUserInfo = useCallback(async () => {
         try {
+            setLoading(true);
             const token = await getToken();
             if (token) {
                 const data = await myInfo(token);
@@ -28,8 +30,10 @@ export default function AccountTab({ route, navigation }) {
             }
         } catch (error) {
             Alert.alert("Error", "Failed to fetch user information.");
+        } finally {
+            setLoading(false);
         }
-    };
+    }, []);
 
     useFocusEffect(
         useCallback(() => {
@@ -53,6 +57,14 @@ export default function AccountTab({ route, navigation }) {
             Alert.alert("Logout failed", "An error occurred. Please try again.");
         }
     };
+
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
 
     return (
         <View className="flex-1 bg-gray-100">
