@@ -1,28 +1,43 @@
 import React, { useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
+import Toast from "react-native-toast-message";
 
-import { sendOtp, resetPassword } from "../../services/AuthAPIService";
+import { resetPassword, sendOtp } from "../../services/AuthAPIService";
 
-const ResetPassword = ({ navigation, route }) => {
-    const [loading, setLoading] = useState(false);
-
-    const [otp, setOtp] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-
-    // Lấy tham số từ route
+export default function ResetPassword({ navigation, route }) {
     const { email } = route.params;
 
-    const handleSendOtp = async () => {
-        setLoading(true);
+    const [otp, setOtp] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPass, setShowConfirmPass] = useState(false);
 
+    const showToast = (type, text1, text2) => {
+        Toast.show({
+            type: type,
+            text1: text1,
+            text2: text2,
+            position: "bottom",
+            bottomOffset: 80,
+            visibilityTime: 3000,
+            text1Style: { fontSize: 16, fontWeight: "bold" },
+            text2Style: { fontSize: 12 },
+        });
+    };
+
+    const handleSendOtp = async () => {
         try {
+            setLoading(true);
             const data = await sendOtp(email);
 
             if (data.success) {
-                Alert.alert("Success", data.message);
+                showToast("success", "Success", data.message);
             } else {
-                Alert.alert("Error", data.message);
+                showToast("error", "Error", data.message);
             }
         } catch (error) {
             Alert.alert("Error", "An error occurred. Please try again.");
@@ -32,32 +47,73 @@ const ResetPassword = ({ navigation, route }) => {
     };
 
     const handleResetPassword = async () => {
-        // Kiểm tra mật khẩu và mật khẩu nhập lại có khớp không
-        if (newPassword !== confirmPassword) {
-            Alert.alert("Error", "Passwords do not match");
+        if (!newPassword || !confirmPassword) {
+            Alert.alert("Lỗi", "Vui lòng điền đầy đủ thông tin");
             return;
         }
 
+        if (newPassword !== confirmPassword) {
+            Alert.alert("Lỗi", "Mật khẩu không trùng khớp");
+            return;
+        }
         try {
-            console.log(email, newPassword, otp);
+            setLoading(true);
             const data = await resetPassword(email, newPassword, otp);
 
             if (data.success) {
-                Alert.alert("Success", data.message);
+                showToast("success", "Success", data.message);
                 navigation.navigate("Login");
             } else {
-                Alert.alert("Error", data.message);
+                showToast("error", "Error", data.message);
             }
         } catch (error) {
-            Alert.alert("Error", "An error occurred. Please try again.");
+            Alert.alert("Lỗi", "Đã xảy ra lỗi. Hãy thử lại.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <View style={styles.container}>
+            <StatusBar style="auto" />
+
+            {loading && (
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.1)", // Làm mờ phần nền xung quanh một chút
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 10,
+                    }}
+                >
+                    {/* Hình vuông chứa ActivityIndicator */}
+                    <View
+                        style={{
+                            width: 68, // Kích thước của hình vuông
+                            height: 68,
+                            backgroundColor: "#fff", // Màu nền trắng cho hình vuông
+                            borderRadius: 10, // Bo góc cho hình vuông
+                            justifyContent: "center",
+                            alignItems: "center",
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.8,
+                            shadowRadius: 2,
+                            elevation: 5, // Hiệu ứng đổ bóng cho Android
+                        }}
+                    >
+                        <ActivityIndicator size="large" color="#6dcf5b" />
+                    </View>
+                </View>
+            )}
+
             <View>
                 <Text style={styles.title}>Đặt lại mật khẩu</Text>
-
                 <Text style={styles.description}>
                     Chúng tôi đã gửi mã xác nhận tới địa chỉ <Text style={styles.bold}>{email}</Text>. Vui lòng kiểm tra
                     hòm thư hoặc hòm thư spam để lấy mã và nhập vào bên dưới
@@ -75,56 +131,63 @@ const ResetPassword = ({ navigation, route }) => {
                         keyboardType="numeric"
                         maxLength={6}
                     />
+                    <TouchableOpacity style={styles.resendButton} onPress={handleSendOtp}>
+                        <Text style={styles.resendButtonText}>Gửi lại mã</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <Text>
                     Mật khẩu mới <Text style={{ color: "red" }}>*</Text>
                 </Text>
                 <View style={styles.inputContainer}>
+                    <Ionicons name="lock-closed-outline" size={24} color="#a0a0a0" style={styles.icon} />
                     <TextInput
                         style={styles.input}
-                        placeholder="Nhập mật khẩu mới"
-                        secureTextEntry
+                        placeholder="Mật khẩu mới"
+                        secureTextEntry={!showPassword}
+                        placeholderTextColor="#a0a0a0"
                         value={newPassword}
                         onChangeText={setNewPassword}
                     />
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                        <Ionicons name={showPassword ? "eye-off-outline" : "eye-outline"} size={24} color="#a0a0a0" />
+                    </TouchableOpacity>
                 </View>
 
-                <Text>
-                    Nhập lại mật khẩu mới <Text style={{ color: "red" }}>*</Text>
-                </Text>
                 <View style={styles.inputContainer}>
+                    <Ionicons name="lock-closed-outline" size={24} color="#a0a0a0" style={styles.icon} />
                     <TextInput
                         style={styles.input}
-                        placeholder="Nhập lại mật khẩu mới"
-                        secureTextEntry
+                        placeholder="Nhập lại mật khẩu"
+                        secureTextEntry={!showConfirmPass}
+                        placeholderTextColor="#a0a0a0"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                     />
+                    <TouchableOpacity onPress={() => setShowConfirmPass(!showConfirmPass)}>
+                        <Ionicons
+                            name={showConfirmPass ? "eye-off-outline" : "eye-outline"}
+                            size={24}
+                            color="#a0a0a0"
+                        />
+                    </TouchableOpacity>
                 </View>
 
                 <View>
                     <Text style={styles.noteText}>Mã xác nhận hết hạn sau 5 phút kể từ khi bạn nhận được mã.</Text>
-                    {loading ? (
-                        <ActivityIndicator size="large" color="#0000ff" />
-                    ) : (
-                        <TouchableOpacity onPress={handleSendOtp}>
-                            <Text style={[styles.noteText, styles.bold]}>Gửi lại mã.</Text>
-                        </TouchableOpacity>
-                    )}
                 </View>
             </View>
-
             <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
                 <Text style={styles.buttonText}>Cập nhật mật khẩu</Text>
             </TouchableOpacity>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        position: "relative",
         backgroundColor: "#ffffff",
         alignItems: "flex-start",
         paddingHorizontal: 20,
@@ -152,22 +215,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         backgroundColor: "#f9f9f9",
     },
-    inputError: {
-        borderColor: "red",
-        borderWidth: 1,
-    },
     icon: {
-        width: 24,
-        height: 24,
         marginRight: 10,
-    },
-    iconFaded: {
-        tintColor: "#a0a0a0",
     },
     input: {
         flex: 1,
         height: "100%",
         fontSize: 16,
+    },
+    resendButton: {
+        backgroundColor: "#509b43",
+        borderRadius: 5,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginLeft: 10,
+    },
+    resendButtonText: {
+        color: "#ffffff",
+        fontSize: 14,
     },
     errorText: {
         color: "red",
@@ -196,5 +261,3 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
 });
-
-export default ResetPassword;
