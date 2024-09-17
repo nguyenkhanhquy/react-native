@@ -119,7 +119,7 @@ export default function AccountTab({ route, navigation }) {
                         <TouchableOpacity
                             className="bg-white p-3 rounded-lg mb-4"
                             style={styles.shadowStyle}
-                            onPress={() => navigation.navigate("PersonalInfo", { user: userInfo })}
+                            onPress={() => navigation.navigate("Profile", { user: userInfo })}
                         >
                             <Text className="text-lg font-medium text-gray-800">Thông tin cá nhân</Text>
                         </TouchableOpacity>

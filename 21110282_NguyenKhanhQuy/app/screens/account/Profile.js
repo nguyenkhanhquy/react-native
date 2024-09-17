@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
 
-export default function PersonalInfo({ route, navigation }) {
+export default function Profile({ route, navigation }) {
     const [fullName, setFullName] = useState(route.params.user.fullName);
     const [fullNameError, setFullNameError] = useState("");
 
@@ -67,6 +67,17 @@ export default function PersonalInfo({ route, navigation }) {
                     <TextInput
                         className="text-base text-gray-700"
                         placeholder="Nhập địa chỉ"
+                        placeholderTextColor="#a0a0a0"
+                        value={address}
+                        onChangeText={setAddress}
+                    />
+                </View>
+
+                <Text className="text-base font-bold mb-2">Kinh nghiệm làm việc</Text>
+                <View className="bg-white rounded-lg px-4 py-3 mb-4">
+                    <TextInput
+                        className="text-base text-gray-700"
+                        placeholder="Nhập kinh nghiệm làm việc"
                         placeholderTextColor="#a0a0a0"
                         value={address}
                         onChangeText={setAddress}
