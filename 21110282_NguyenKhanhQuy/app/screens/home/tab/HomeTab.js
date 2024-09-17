@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { ActivityIndicator, View, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { StatusBar } from "expo-status-bar";
 
 import { getListJobs } from "../../../services/JobAPIService";
 
@@ -74,6 +75,7 @@ export default function HomeTab({ navigation }) {
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <StatusBar style="auto" />
                 <ActivityIndicator size="large" color="#6dcf5b" />
             </View>
         );
@@ -81,6 +83,7 @@ export default function HomeTab({ navigation }) {
 
     return (
         <View className="flex-1 bg-gray-100 pt-3">
+            <StatusBar style="auto" />
             {/* Search bar */}
             <View className="flex-row items-center bg-white rounded-lg py-3 px-4 mx-3 mt-8 mb-4 shadow-sm">
                 <Ionicons name="search" size={24} color="#888" className="mr-3" />

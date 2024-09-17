@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
 
 export default function Profile({ route, navigation }) {
+    const email = route.params.user.email;
+
     const [fullName, setFullName] = useState(route.params.user.fullName);
     const [fullNameError, setFullNameError] = useState("");
 
@@ -45,7 +47,7 @@ export default function Profile({ route, navigation }) {
                         className="text-base text-gray-700"
                         placeholder="Email"
                         placeholderTextColor="#a0a0a0"
-                        value={route.params.user.email}
+                        value={email}
                         editable={false}
                     />
                 </View>

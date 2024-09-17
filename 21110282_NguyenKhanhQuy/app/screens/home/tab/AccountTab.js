@@ -3,6 +3,7 @@ import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Alert, Ima
 import { useFocusEffect } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
+import { StatusBar } from "expo-status-bar";
 
 import { logout } from "../../../services/AuthAPIService";
 import { myInfo } from "../../../services/UsersAPIService";
@@ -42,25 +43,45 @@ export default function AccountTab({ route, navigation }) {
     );
 
     const handleLogout = async () => {
-        try {
-            const token = await getToken();
-            if (token) {
-                const data = await logout(token);
+        Alert.alert(
+            "Xác nhận đăng xuất",
+            "Bạn có chắc chắn muốn đăng xuất chứ?",
+            [
+                {
+                    text: "Hủy",
+                },
+                {
+                    text: "Đăng xuất",
+                    onPress: async () => {
+                        try {
+                            setLoading(true);
+                            const token = await getToken();
+                            if (token) {
+                                const data = await logout(token);
 
-                if (data.success) {
-                    navigation.navigate("Login");
-                    Alert.alert("Success", data.message);
-                    deleteToken();
-                }
-            }
-        } catch (error) {
-            Alert.alert("Logout failed", "An error occurred. Please try again.");
-        }
+                                if (data.success) {
+                                    deleteToken();
+                                    setUserInfo(null);
+                                    navigation.navigate("Login");
+                                    Alert.alert("Success", data.message);
+                                }
+                            }
+                        } catch (error) {
+                            Alert.alert("Logout failed", "An error occurred. Please try again.");
+                        } finally {
+                            setLoading(false);
+                        }
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
     };
 
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <StatusBar style="auto" />
                 <ActivityIndicator size="large" color="#6dcf5b" />
             </View>
         );
@@ -68,6 +89,7 @@ export default function AccountTab({ route, navigation }) {
 
     return (
         <View className="flex-1 bg-gray-100">
+            <StatusBar style="auto" />
             {/* Background Section */}
             <View className="bg-[#5fa75f] h-36 w-full absolute top-0 left-0 right-0 z-[-1]" />
 
