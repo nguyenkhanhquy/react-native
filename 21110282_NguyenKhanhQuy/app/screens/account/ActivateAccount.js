@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, ActivityIndicator } from "react-native";
 import { sendOtp, activate } from "../../services/AuthAPIService";
 import CommonStyles from "../../assets/styles/CommonStyles";
 import Toast from "react-native-toast-message";
 
 import { getToken } from "../../utils/AuthStorage";
 
-const ActivateAccount = ({ route, navigation }) => {
+export default function ActivateAccount({ route, navigation }) {
+    const [isPressed, setIsPressed] = useState(false);
+
     const [loading, setLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState("");
@@ -66,9 +68,17 @@ const ActivateAccount = ({ route, navigation }) => {
         }
     };
 
+    const handleBack = () => {
+        if (!isPressed) {
+            setIsPressed(true);
+            navigation.goBack();
+            setTimeout(() => setIsPressed(false), 300); // Reset trạng thái sau 300 milliseconds
+        }
+    };
+
     return (
         <View style={CommonStyles.container}>
-            <Text style={CommonStyles.title}>Activate Account Page</Text>
+            <Text style={CommonStyles.title}>Kích hoạt tài khoản</Text>
 
             <TextInput style={CommonStyles.input} placeholder="Email" value={email} editable={false} />
 
@@ -93,17 +103,15 @@ const ActivateAccount = ({ route, navigation }) => {
                         </TouchableOpacity>
                     ) : (
                         <TouchableOpacity style={CommonStyles.button} onPress={handleSendOTP}>
-                            <Text style={CommonStyles.buttonText}>Send OTP</Text>
+                            <Text style={CommonStyles.buttonText}>Gửi OTP</Text>
                         </TouchableOpacity>
                     )}
                 </>
             )}
 
-            <TouchableOpacity style={CommonStyles.button} onPress={() => navigation.goBack()}>
-                <Text style={CommonStyles.buttonText}>Back</Text>
+            <TouchableOpacity style={CommonStyles.button} onPress={handleBack}>
+                <Text style={CommonStyles.buttonText}>Hủy</Text>
             </TouchableOpacity>
         </View>
     );
-};
-
-export default ActivateAccount;
+}
