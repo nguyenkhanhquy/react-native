@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View, TouchableOpacity, Alert, Image } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import Octicons from "@expo/vector-icons/Octicons";
 
 import { logout } from "../../../services/AuthAPIService";
 import { myInfo } from "../../../services/UsersAPIService";
@@ -10,7 +11,6 @@ import { getToken, deleteToken } from "../../../utils/AuthStorage";
 
 // Import hình ảnh từ thư mục cục bộ
 import profileImage from "../../../assets/img/cat.jpg";
-import avatarDefault from "../../../assets/img/avatar-default.png";
 
 export default function AccountTab({ route, navigation }) {
     const [loading, setLoading] = useState(true);
@@ -61,7 +61,7 @@ export default function AccountTab({ route, navigation }) {
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#6dcf5b" />
             </View>
         );
     }
@@ -76,10 +76,7 @@ export default function AccountTab({ route, navigation }) {
                 <>
                     <View className="flex-row bg-white rounded-lg p-5 mx-5 mt-20" style={styles.shadowStyle}>
                         <View className="relative">
-                            <Image
-                                source={profileImage}
-                                className="w-24 h-24 rounded-full border-2 border-[#6dcf5b] mr-5"
-                            />
+                            <Image source={profileImage} className="w-24 h-24 rounded-full border-2 border-[#6dcf5b]" />
                             <TouchableOpacity
                                 className="absolute right-0 bottom-0 bg-gray-600 rounded-full p-1 border-2 border-white"
                                 // onPress={selectImage}
@@ -87,22 +84,31 @@ export default function AccountTab({ route, navigation }) {
                                 <Ionicons name="camera-outline" size={20} color="#fff" />
                             </TouchableOpacity>
                         </View>
-                        <View className="flex-1">
+                        <View className="flex-1 ml-4">
                             <Text className="text-lg font-bold text-gray-800 mb-1">{userInfo.fullName}</Text>
                             <Text className="text-sm text-gray-600" numberOfLines={1} ellipsizeMode="tail">
                                 {userInfo.email}
                             </Text>
                             {userInfo.active ? (
-                                <Text className="text-sm font-bold text-gray-600 mt-2 ml-3">Tài khoản đã xác thực</Text>
+                                <View className="flex-row items-center mt-2">
+                                    <Octicons
+                                        name="shield-check"
+                                        size={20}
+                                        color="#6dcf5b"
+                                        style={{ marginRight: 4 }}
+                                    />
+                                    <Text className="text-sm font-bold text-gray-600">Tài khoản đã xác thực</Text>
+                                </View>
                             ) : (
                                 <TouchableOpacity
                                     onPress={() => {
                                         navigation.navigate("ActivateAccount", { email: userInfo.email });
                                     }}
                                 >
-                                    <Text className="text-sm font-bold text-gray-600 mt-2 ml-3">
-                                        Tài khoản chưa xác thực
-                                    </Text>
+                                    <View className="flex-row items-center mt-2">
+                                        <Octicons name="shield-x" size={20} color="red" style={{ marginRight: 4 }} />
+                                        <Text className="text-sm font-bold text-gray-600">Tài khoản chưa xác thực</Text>
+                                    </View>
                                 </TouchableOpacity>
                             )}
                         </View>
@@ -139,10 +145,9 @@ export default function AccountTab({ route, navigation }) {
                 <>
                     <View className="flex-row bg-white rounded-lg p-5 mx-5 mt-20" style={styles.shadowStyle}>
                         <View className="relative mr-5">
-                            <Image
-                                source={avatarDefault}
-                                className="w-24 h-24 rounded-full border-2 border-[#6dcf5b]"
-                            />
+                            <View className="w-24 h-24 rounded-full border-2 border-[#509b43] justify-center items-center">
+                                <Ionicons name="person-outline" size={48} color="#509b43" />
+                            </View>
                             <TouchableOpacity
                                 className="absolute right-0 bottom-0 bg-gray-600 rounded-full p-1 border-2 border-white"
                                 // onPress={selectImage}
@@ -151,9 +156,9 @@ export default function AccountTab({ route, navigation }) {
                             </TouchableOpacity>
                         </View>
                         <View className="flex-1 justify-center">
-                            <Text className="text-lg font-bold text-gray-800 mb-3">Vui lòng đăng nhập</Text>
+                            <Text className="text-lg font-bold text-gray-800 mb-3 text-center">Vui lòng đăng nhập</Text>
                             <TouchableOpacity
-                                className="bg-green-500 p-3 rounded-lg justify-center items-center"
+                                className="bg-[#509b43] p-3 rounded-lg justify-center items-center"
                                 onPress={() => {
                                     navigation.navigate("Login");
                                 }}
