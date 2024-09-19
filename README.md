@@ -11,6 +11,7 @@
 1. [Bài tập tuần 2 - 29/08/2024](#bài-tập-tuần-2---29082024)
 1. [Bài tập tuần 3 - 05/09/2024](#bài-tập-tuần-3---05092024)
 1. [Bài tập tuần 4 - 12/09/2024](#bài-tập-tuần-4---12092024)
+1. [Bài tập tuần 5 - 19/09/2024](#bài-tập-tuần-5---19092024)
 
 ### Bài tập tuần 1 - 22/08/2024
 
@@ -50,3 +51,13 @@ Yêu cầu:
 1. Chức năng Profile của người dùng đã đăng nhập thành công (API và Code): nộp từ 8g - 10g30
 1. Chức năng tìm kiếm, lọc sản phẩm trên trang chủ (API và Code): về nhà
 1. Chức năng xem Chi tiết sản phẩm từ trang chủ, từ kết quả tìm kiếm, lọc (API và Code): về nhà
+
+### Bài tập tuần 5 - 19/09/2024
+
+-   [Bài tập A05: Xây dựng trang chủ của ứng dụng](https://github.com/nguyenkhanhquy/react-native/tree/main/21110282_NguyenKhanhQuy)
+
+Bài tập nhóm:
+
+1. Chức năng hiển thị 10 sản phẩm bán chạy nhất hiển thị theo chiều ngang của màn hình (API và Code)
+1. Chức năng hiển thị tất cả sản phẩm theo từng danh mục sử dụng Lazy loading để load tiếp sản phẩm khi kéo xuống cuối trang (API và Code)
+1. Xây dựng Navigation ở cuối trang và UI Search, Back ở trên cùng của trang.
