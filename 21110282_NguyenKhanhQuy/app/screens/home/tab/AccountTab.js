@@ -45,7 +45,7 @@ export default function AccountTab({ route, navigation }) {
     const handleLogout = async () => {
         Alert.alert(
             "Xác nhận đăng xuất",
-            "Bạn có chắc chắn muốn đăng xuất chứ?",
+            "Bạn có chắc chắn muốn đăng xuất?",
             [
                 {
                     text: "Hủy",
