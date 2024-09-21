@@ -23,7 +23,7 @@ const Intro = ({ navigation }) => {
 
         const timer = setTimeout(() => {
             checkToken();
-        }, 4000); // 1000ms = 1s
+        }, 2000); // 1000ms = 1s
 
         return () => clearTimeout(timer);
     }, [navigation]);
