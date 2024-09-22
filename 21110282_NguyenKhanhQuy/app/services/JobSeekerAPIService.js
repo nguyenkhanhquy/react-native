@@ -15,3 +15,11 @@ export const updateAvatar = async (token, avatar) => {
         },
     });
 };
+
+export const updateProfile = async (token, data) => {
+    return postRequest("job-seeker/update-profile", data, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+};

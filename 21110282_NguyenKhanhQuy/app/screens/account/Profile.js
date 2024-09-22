@@ -1,13 +1,21 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
+import { ActivityIndicator, Text, TextInput, View, TouchableOpacity, Alert } from "react-native";
+
+import { StatusBar } from "expo-status-bar";
+
+import { getToken } from "../../utils/AuthStorage";
+import { updateProfile } from "../../services/JobSeekerAPIService";
 
 export default function Profile({ route, navigation }) {
+    const [loading, setLoading] = useState(false);
+
     const email = route.params.user.email;
 
     const [fullName, setFullName] = useState(route.params.user.fullName);
     const [fullNameError, setFullNameError] = useState("");
 
     const [address, setAddress] = useState(route.params.user.address);
+    const [workExperience, setWorkExperience] = useState(route.params.user.workExperience);
 
     const validateFullName = (value) => {
         if (value.trim() === "") {
@@ -18,17 +26,31 @@ export default function Profile({ route, navigation }) {
         setFullName(value);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (fullName.trim() === "") {
             setFullNameError("Họ và tên không được để trống");
         } else {
             setFullNameError("");
 
+            setLoading(true);
             try {
-                // Xử lý logic lưu thông tin cá nhân
-                Alert.alert("Thành công", "Cập nhật thông tin tài khoản thành công.");
+                const token = await getToken();
+                if (token) {
+                    const body = { fullName, address, workExperience };
+
+                    const data = await updateProfile(token, body);
+
+                    if (data.success) {
+                        Alert.alert("Thành công", "Cập nhật thông tin tài khoản thành công.");
+                        navigation.goBack();
+                    } else {
+                        Alert.alert("Lỗi", "Đã xảy ra lỗi. Hãy thử lại.");
+                    }
+                }
             } catch (error) {
-                Alert.alert("Lỗi", "Đã xảy ra lỗi. Hãy thử lại.");
+                Alert.alert("Error", "An error occurred. Please try again.");
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -39,6 +61,43 @@ export default function Profile({ route, navigation }) {
 
     return (
         <View className="flex-1 bg-gray-100">
+            <StatusBar style="auto" />
+
+            {loading && (
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: "rgba(0, 0, 0, 0.1)", // Làm mờ phần nền xung quanh một chút
+                        justifyContent: "center",
+                        alignItems: "center",
+                        zIndex: 10,
+                    }}
+                >
+                    {/* Hình vuông chứa ActivityIndicator */}
+                    <View
+                        style={{
+                            width: 68, // Kích thước của hình vuông
+                            height: 68,
+                            backgroundColor: "#fff", // Màu nền trắng cho hình vuông
+                            borderRadius: 10, // Bo góc cho hình vuông
+                            justifyContent: "center",
+                            alignItems: "center",
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.8,
+                            shadowRadius: 2,
+                            elevation: 5, // Hiệu ứng đổ bóng cho Android
+                        }}
+                    >
+                        <ActivityIndicator size="large" color="#6dcf5b" />
+                    </View>
+                </View>
+            )}
+
             {/* Form Section */}
             <View className="flex-1 mt-6 px-6">
                 <Text className="text-base font-bold mb-2">Email</Text>
@@ -81,8 +140,8 @@ export default function Profile({ route, navigation }) {
                         className="text-base text-gray-700"
                         placeholder="Nhập kinh nghiệm làm việc"
                         placeholderTextColor="#a0a0a0"
-                        value={address}
-                        onChangeText={setAddress}
+                        value={workExperience}
+                        onChangeText={setWorkExperience}
                     />
                 </View>
             </View>

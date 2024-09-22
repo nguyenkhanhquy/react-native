@@ -50,7 +50,6 @@ export default function ActivateAccount({ route, navigation }) {
         setLoading(true);
         try {
             const token = await getToken();
-            console.log(token);
             if (token) {
                 const data = await activate(token, otp);
 
