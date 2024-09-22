@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { getToken } from "../../utils/AuthStorage";
+import { getToken, deleteToken } from "../../utils/AuthStorage";
 import { introspect } from "../../services/AuthAPIService";
 
 // Import hình ảnh từ thư mục cục bộ
@@ -10,12 +10,15 @@ const Intro = ({ navigation }) => {
     useEffect(() => {
         const checkToken = async () => {
             const token = await getToken();
+
             if (token) {
                 const data = await introspect(token);
 
                 if (data.success) {
                     navigation.replace("MainTabNavigator");
                     return;
+                } else {
+                    deleteToken();
                 }
             }
             navigation.replace("Login");

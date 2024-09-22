@@ -20,7 +20,8 @@
         "nativewind": "^2.0.11",
         "react": "18.2.0",
         "react-native": "0.74.5",
-        "react-native-toast-message": "^2.2.0"
+        "react-native-toast-message": "^2.2.0",
+        "expo-image-picker": "~15.0.7"
     },
     "devDependencies": {
         "@babel/core": "^7.20.0",
