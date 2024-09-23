@@ -136,7 +136,7 @@ export default function AccountTab({ route, navigation }) {
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <StatusBar style="auto" />
-                <ActivityIndicator size="large" color="#6dcf5b" />
+                <ActivityIndicator size="large" color="#16a34a" />
             </View>
         );
     }

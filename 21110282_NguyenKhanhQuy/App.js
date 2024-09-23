@@ -14,6 +14,8 @@ import Profile from "./app/screens/account/Profile";
 import ChangePassword from "./app/screens/account/ChangePassword";
 import ActivateAccount from "./app/screens/account/ActivateAccount";
 import JobDetail from "./app/screens/job/JobDetail";
+import Search from "./app/screens/job/Search";
+import JobList from "./app/screens/job/JobList";
 
 import AccountTab from "./app/screens/home/tab/AccountTab";
 import HomeTab from "./app/screens/home/tab/HomeTab";
@@ -47,7 +49,7 @@ function MainTabNavigator() {
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: "#6dcf5b",
+                tabBarActiveTintColor: "#16a34a",
                 tabBarInactiveTintColor: "gray",
             })}
         >
@@ -95,6 +97,12 @@ export default function App() {
                 />
                 <Stack.Screen name="ActivateAccount" component={ActivateAccount} />
                 <Stack.Screen name="JobDetail" component={JobDetail} />
+                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen
+                    name="JobList"
+                    component={JobList}
+                    options={{ headerShown: true, headerTitle: "Việc làm tốt nhất" }}
+                />
             </Stack.Navigator>
             <Toast />
         </NavigationContainer>
