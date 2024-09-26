@@ -61,3 +61,19 @@ Bài tập nhóm:
 1. Chức năng hiển thị 10 sản phẩm bán chạy nhất hiển thị theo chiều ngang của màn hình (API và Code)
 1. Chức năng hiển thị tất cả sản phẩm theo từng danh mục sử dụng Lazy loading để load tiếp sản phẩm khi kéo xuống cuối trang (API và Code)
 1. Xây dựng Navigation ở cuối trang và UI Search, Back ở trên cùng của trang.
+
+### Bài tập tuần 6 - 26/09/2024
+
+- [Bài tập A06: Chức năng giỏ hàng, thanh toán đơn hàng](https://github.com/nguyenkhanhquy/react-native/tree/main/21110282_NguyenKhanhQuy)
+
+Bài tập nhóm:
+
+1. Xây dựng chức năng Giỏ hàng cho ứng dụng bán hàng (API + App). Lưu trữ thông tin giỏ hàng bằng local database hoặc lưu trên API đều được.
+1. Xây dựng chức năng thanh toán đơn hàng với phương thức bắt buộc là COD, có thể tìm hiểu thêm về thanh toán thông qua ví điện tử,...
+1. Xây dựng chức năng theo dõi đơn hàng của người dùng gồm xem lại lịch sử mua hàng và theo dõi đơn hàng có xác định các trạng thái đơn hàng:  
+    1. đơn hàng mới
+    2. Đã xác nhận đơn hàng (thủ công hoặc tự động 30 phút sau khi đơn đặt thành công)
+    3. Shop đang chuẩn bị hàng
+    4. Đang giao hàng
+    5. Đã giao thành công
+    6. Hủy đơn hàng (chỉ cho phép hủy trước 30 phút sau khi đặt đơn, nếu đang ở bước 3 thì chuyển sang Gửi Yêu cầu hủy đơn cho shop)
