@@ -12,6 +12,8 @@
 1. [Bài tập tuần 3 - 05/09/2024](#bài-tập-tuần-3---05092024)
 1. [Bài tập tuần 4 - 12/09/2024](#bài-tập-tuần-4---12092024)
 1. [Bài tập tuần 5 - 19/09/2024](#bài-tập-tuần-5---19092024)
+1. [Bài tập tuần 6 - 26/09/2024](#bài-tập-tuần-6---26092024)
+1. [Bài tập tuần 7 - 03/10/2024](#bài-tập-tuần-7---03102024)
 
 ### Bài tập tuần 1 - 22/08/2024
 
@@ -77,3 +79,13 @@ Bài tập nhóm:
     4. Đang giao hàng
     5. Đã giao thành công
     6. Hủy đơn hàng (chỉ cho phép hủy trước 30 phút sau khi đặt đơn, nếu đang ở bước 3 thì chuyển sang Gửi Yêu cầu hủy đơn cho shop)
+
+### Bài tập tuần 7 - 03/10/2024
+
+- [Bài tập A07: Bình luận, đánh giá, yêu thích](https://github.com/nguyenkhanhquy/react-native/tree/main/21110282_NguyenKhanhQuy)
+
+Bài tập nhóm:
+
+1. Xây dựng chức năng Bình luận, đánh giá sản phẩm đã mua thành công, mỗi lần đánh giá sẽ tặng mã giảm giá hoặc tặng điểm vào kho điểm tích lũy của mình cho lần mua sau (API + App).  
+1. Xây dựng chức năng sản phẩm yêu thích, sản phẩm tương tự, sản phẩm đã xem và đếm số khách mua, khách bình luận trên sản phẩm đó (API + App).
+1. Xây dựng chức năng phiếu giảm giá, khuyến mãi để áp vào sản phẩm khi khách mua hàng, kho điểm tích lũy để mua hàng từ điểm tích lũy (chức năng mở rộng).
