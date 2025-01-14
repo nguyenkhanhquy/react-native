@@ -74,7 +74,7 @@ Bài tập nhóm:
 1. Xây dựng chức năng Giỏ hàng cho ứng dụng bán hàng (API + App). Lưu trữ thông tin giỏ hàng bằng local database hoặc lưu trên API đều được.
 1. Xây dựng chức năng thanh toán đơn hàng với phương thức bắt buộc là COD, có thể tìm hiểu thêm về thanh toán thông qua ví điện tử,...
 1. Xây dựng chức năng theo dõi đơn hàng của người dùng gồm xem lại lịch sử mua hàng và theo dõi đơn hàng có xác định các trạng thái đơn hàng:  
-    1. đơn hàng mới
+    1. Đơn hàng mới
     2. Đã xác nhận đơn hàng (thủ công hoặc tự động 30 phút sau khi đơn đặt thành công)
     3. Shop đang chuẩn bị hàng
     4. Đang giao hàng
